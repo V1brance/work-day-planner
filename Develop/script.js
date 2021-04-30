@@ -19,15 +19,16 @@ function refreshElements() {
 function updateTime(timeSlot) {
   var time = moment();
   slotTime = parseInt(timeSlot.split("-")[0]);
-  if (slotTime > 6) {
+  if (slotTime > 6 && slotTime !== 12) {
     slotTime += " am";
   } else {
     slotTime += " pm";
   }
   var slotMoment = moment(slotTime, "h a");
-  var timeDiff = time.diff(slotMoment, "hours");
+  var timeDiff = time.diff(slotMoment, "minutes");
+  console.log(slotTime + " " + timeDiff);
   var otherClasses = " form-control h-100";
-  if (timeDiff > 0) {
+  if (timeDiff > 60) {
     $("#" + timeSlot).attr("class", "past" + otherClasses);
     $("#" + timeSlot).prop("disabled", true);
   } else if (timeDiff < 0) {
